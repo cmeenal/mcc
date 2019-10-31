@@ -1,0 +1,100 @@
+MainActivity.java
+package com.example.shapes17;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+
+public class MainActivity extends AppCompatActivity
+{
+   @Override
+   protected void onCreate(Bundle savedInstanceState) 
+    {
+       super.onCreate(savedInstanceState);
+       setContentView(new CustomView(this));
+   }// onCreate function
+}// MainActivity class ends here
+
+CustomView.java
+package com.example.shapes17;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Rect;
+import android.view.View;
+
+import static android.graphics.Color.parseColor;
+
+public class CustomView extends View
+{
+   private Rect rectangle;
+   private Paint paint,paint1,paint2;
+
+   public CustomView(Context context) 
+   {
+       super(context);
+       int x = 100;
+       int y = 50;
+       int sideLength = 400;
+
+       // create a rectangle that we'll draw later
+       rectangle = new Rect(x, y, sideLength*2, sideLength);
+
+       // create the Paint and set its color
+       paint = new Paint();
+       paint.setColor(Color.MAGENTA);
+       paint1 = new Paint();
+       paint1.setColor(Color.GRAY);
+       paint2 = new Paint();
+       paint2.setColor(Color.CYAN);
+   }// CustomView constructor ends
+
+   public void drawTriangle(Canvas canvas, Paint paint, int x, int y, int width) 
+   {
+       int halfWidth = width / 2;
+       Path path = new Path();
+       path.moveTo(x, y - halfWidth); // Top
+       path.lineTo(x - halfWidth, y + halfWidth); // Bottom left
+       path.lineTo(x + halfWidth, y + halfWidth); // Bottom right
+       path.lineTo(x, y - halfWidth); // Back to Top
+       path.close();
+       canvas.drawPath(path, paint);
+   }// drawTriangle function
+
+   @Override
+   protected void onDraw(Canvas canvas) 
+   {
+       canvas.drawColor(Color.parseColor("#dcdcdc"));
+       canvas.drawRect(rectangle, paint2);
+       //canvas.drawRect(250,400,500,200,paint);
+       canvas.drawCircle(540,1200,150,paint1);
+       drawTriangle(canvas, paint, 600, 600, 250);
+    }// onDraw function
+
+}// CustomView class ends
+
+Activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle"
+   xmlns:app="http://schemas.android.com/apk/res-auto"
+   xmlns:tools="http://schemas.android.com/tools"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   tools:context=".MainActivity">
+
+   <TextView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Hello World!"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintLeft_toLeftOf="parent"
+       app:layout_constraintRight_toRightOf="parent"
+       app:layout_constraintTop_toTopOf="parent" />
+
+   <corners android:radius="20dp"/>
+   <padding android:left="10dp" android:right="10dp" android:top="10dp" android:bottom="10dp"/>
+   <solid android:color="#FFFFFF"/>
+   <stroke android:width="12dp" android:color="#000000"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

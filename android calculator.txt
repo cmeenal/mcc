@@ -1,0 +1,221 @@
+mccCalculator
+COMMANDS
+d50204@d50204-ThinkCentre-M720t:~$ sudo chown d50204 /dev/kvm
+
+CODE
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:app="http://schemas.android.com/apk/res-auto"
+   xmlns:tools="http://schemas.android.com/tools"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   tools:context=".MainActivity">
+
+   <EditText
+       android:id="@+id/number1"
+       android:layout_width="293dp"
+       android:layout_height="48dp"
+       android:layout_marginStart="59dp"
+       android:layout_marginLeft="59dp"
+       android:layout_marginTop="137dp"
+       android:layout_marginEnd="59dp"
+       android:layout_marginRight="59dp"
+       android:layout_marginBottom="661dp"
+       android:ems="10"
+       android:inputType="number"
+       android:hint="Enter first number"
+
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"/>
+
+   <EditText
+       android:id="@+id/number2"
+       android:layout_width="288dp"
+       android:layout_height="42dp"
+       android:layout_marginStart="59dp"
+       android:layout_marginLeft="59dp"
+       android:layout_marginTop="224dp"
+       android:layout_marginBottom="580dp"
+       android:ems="10"
+       android:inputType="number"
+       android:hint="Enter second number"
+
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"/>
+
+
+   <Button
+       android:id="@+id/btnadd"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="51dp"
+       android:layout_marginLeft="51dp"
+       android:layout_marginTop="343dp"
+       android:layout_marginBottom="455dp"
+       android:text="+"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintVertical_bias="0.62" />
+   <Button
+       android:id="@+id/btnsub"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="259dp"
+       android:layout_marginLeft="259dp"
+       android:layout_marginTop="343dp"
+       android:layout_marginBottom="455dp"
+       android:text="-"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent" />
+
+   <Button
+       android:id="@+id/btnmul"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="51dp"
+       android:layout_marginLeft="51dp"
+       android:layout_marginTop="430dp"
+       android:layout_marginBottom="368dp"
+       android:text="*"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintVertical_bias="0.638" />
+   <Button
+       android:id="@+id/btndiv"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="259dp"
+       android:layout_marginLeft="259dp"
+       android:layout_marginTop="430dp"
+       android:layout_marginBottom="368dp"
+       android:text="/"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"/>
+
+
+   <EditText
+       android:id="@+id/answer"
+       android:layout_width="293dp"
+       android:layout_height="48dp"
+       android:layout_marginStart="51dp"
+       android:layout_marginLeft="51dp"
+       android:layout_marginTop="569dp"
+       android:layout_marginBottom="229dp"
+       android:ems="10"
+       android:inputType="number"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+MainActivity.java
+package com.example.mcccalculator;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.view.View;
+
+public class MainActivity extends AppCompatActivity 
+{
+   Button addbutton,subbutton,mulbutton,divbutton;
+   EditText numtxt1,numtxt2,anstxt;
+   int val1,val2,res;
+   boolean add,sub,div,mul;
+   @Override
+   protected void onCreate(Bundle savedInstanceState) 
+   {
+       super.onCreate(savedInstanceState);
+       setContentView(R.layout.activity_main);
+
+       addbutton=(Button)findViewById(R.id.btnadd);
+       subbutton=(Button)findViewById(R.id.btnsub);
+       mulbutton=(Button)findViewById(R.id.btnmul);
+       divbutton=(Button)findViewById(R.id.btndiv);
+
+       numtxt1=(EditText)findViewById(R.id.number1);
+       numtxt2=(EditText)findViewById(R.id.number2);
+
+       anstxt=(EditText)findViewById(R.id.answer);
+
+       //add button
+       addbutton.setOnClickListener(new View.OnClickListener() 
+       {
+           @Override
+           public void onClick(View v) 
+           {
+               if (numtxt1 == null && numtxt2 == null) 
+		{      anstxt.setText("");  } //if
+	else 
+	{
+                   val1 = Integer.parseInt(numtxt1.getText().toString());
+                   val2 = Integer.parseInt(numtxt2.getText().toString());
+                   anstxt.setText(val1 + val2 + "");
+               }//else
+           }// onClick funtion
+       });// addbutton.setOnClickListener ends here
+
+       //subtract button
+       subbutton.setOnClickListener(new View.OnClickListener() 
+       {
+           @Override
+           public void onClick(View v) 
+           {
+               if (numtxt1 == null && numtxt2 == null) 
+		{   anstxt.setText("");    }//if
+	else 
+	{
+                   val1 = Integer.parseInt(numtxt1.getText().toString());
+                   val2 = Integer.parseInt(numtxt2.getText().toString());
+                   anstxt.setText(val1 - val2 + "");
+                }//else
+           }// onClick funtion
+       });// subbutton.setOnClickListener ends here
+
+        //multiply button
+       mulbutton.setOnClickListener(new View.OnClickListener() 
+       {
+           @Override
+           public void onClick(View v) 
+           {
+              if (numtxt1 == null && numtxt2 == null) 
+		{   anstxt.setText("");     }  //if
+	else 
+	{
+                   val1 = Integer.parseInt(numtxt1.getText().toString());
+                   val2 = Integer.parseInt(numtxt2.getText().toString());
+                   anstxt.setText(val1 * val2 + "");
+                }//else
+           }// onClick funtion
+       });// mulbutton.setOnClickListener ends here
+
+       //divide button
+       divbutton.setOnClickListener(new View.OnClickListener() 
+       {
+           @Override
+           public void onClick(View v) 
+           {
+               if (numtxt1 == null && numtxt2 == null) 
+		{  anstxt.setText("");     } //if
+	else 
+	{
+                   val1 = Integer.parseInt(numtxt1.getText().toString());
+                   val2 = Integer.parseInt(numtxt2.getText().toString());
+                   anstxt.setText(val1 / val2 + "");
+                }//else
+           }// onClick funtion
+       });//divbutton.setOnClickListener ends here
+
+   }// onCreate funtion
+}// MainActivity class ends
+
